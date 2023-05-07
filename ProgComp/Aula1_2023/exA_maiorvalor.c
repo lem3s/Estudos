@@ -11,29 +11,24 @@ int main(){
 
   while (flag == 0){
     if (numero == 10000){
-      n1 = 1;
-      n2 = 0;
-      n3 = 0;
-      n4 = 0;
-      n5 = 0;
-      soma = n1 + n2 + n3 + n4 + n5;
+      soma = 10000;
     }
     if ((numero < 10000) && (numero >= 1000)){
       n1 = numero / 1000;
-      n2 = (numero - n1 * 1000) / 100;
-      n3 = ((numero - (n1 * 1000)) - (n2 * 100)) / 10;
-      n4 = (((numero - (n1 * 1000)) - (n2 * 100)) - (n3 * 10));
+      n2 = (numero%1000) / 100;
+      n3 = (numero%100) / 10;
+      n4 = numero%10;
       soma = n1 + n2 + n3 + n4;
     }
     if ((numero < 1000) && (numero >= 100)){
       n1 = numero / 100;
-      n2 = (numero - n1 * 100) / 10;
-      n3 = ((numero - n1 * 100) - n2 * 10);
+      n2 = (numero%100) / 10;
+      n3 = numero%10;
       soma = n1 + n2 + n3;
     }
     if ((numero < 100) &&(numero >= 10)){
       n1 = numero / 10;
-      n2 = (numero - n1 * 10);
+      n2 = numero%10;
       soma = n1 + n2;
     }
     if (numero < 10){
@@ -41,12 +36,12 @@ int main(){
       soma = n1;
     }
     if ((numero >= n) && (soma == s)){
-	flag = 1;
+	    flag = 1;
     }else if (numero < n){
-	flag = 1;
-	numero = -1;
+	    flag = 1;
+	    numero = -1;
     }else{
-    numero--;
+      numero--;
     }
   }
   printf("%d\n", numero);
