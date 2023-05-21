@@ -1,26 +1,30 @@
 #include <stdio.h>
 
 int main(){
-  int valores[4];
-  int i=0, j=0, temp=0, soma=0;
+  
+  int a, b, c, d, soma;
 
-  for(i = 0; i < 4; i++){
-    scanf("%d", &valores[i]);
+  scanf("%d", &a);
+  scanf("%d", &b);
+  scanf("%d", &c);
+  scanf("%d", &d);
+
+  if (a > b && a > c && a > d){
+    soma = b + c + d;
+    printf("%d\n", soma);
+  }else if (b > a && b > c && b > d){
+    soma = a + c + d;
+    printf("%d\n", soma);
+  }else if (c > a && c > b && c > d){
+    soma = a + b + d;
+    printf("%d\n", soma);
+  } else if (d > a && d > b && d > c){
+    soma = a + b + c;
+    printf("%d\n", soma);
+  }else{
+    soma = a + b + c;
+    printf("%d\n", soma);
   }
 
-  for (int i=0; i < 3; i++){
-    for (int j = 0; j < 3 - i ; j++){
-      if (valores[j] > valores[j+1]){
-        int temp = valores[j];
-        valores[j] = valores[j+1];
-        valores[j+1] = temp;
-      }
-    }
-  }
-
-  for (i=0; i < 3; i++){
-    soma += valores[i];
-  }
-  printf("%d\n", soma);
   return 0;
 }
