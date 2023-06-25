@@ -19,9 +19,16 @@ int main(){
 
   if(contador < k){
     printf("SIM\n");
+
   }else{
     printf("NAO\n");
+    for(i=n-1; i>=0; i--){
+      if(arr[i]<=0){
+        printf("%d\n", i+1);
+      }
+    }
   }
   
+
   return 0;
 }
