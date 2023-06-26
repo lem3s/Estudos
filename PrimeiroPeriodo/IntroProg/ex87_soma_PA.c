@@ -2,11 +2,10 @@
 
 int main(){
 
-  int ini, raz, n, soma;
+  int ini, raz, n, soma, i=0;
 
   scanf("%d %d %d", &ini, &raz, &n);
 
-  int i=0;
   for (i=0; i < n; i++){
     soma += ini + i * raz;
   }

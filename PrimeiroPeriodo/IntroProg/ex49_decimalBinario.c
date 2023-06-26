@@ -10,8 +10,14 @@ int main(){
   }
   i=0;
 
-  while(1){
+  while(scanf("%d", &n) != EOF){
+    /*
     scanf("%d", &n);
+
+    if(n == EOF){
+      break;
+    }
+    */
 
     if(n == 0){
       printf("0\n");
@@ -22,10 +28,10 @@ int main(){
         i++;
         n = n/2;
       }
-      tam=i-1;
+      tam=i;
 
       for(i=0; i<tam; i++){
-        printf("%d", bin[tam-i]);
+        printf("%d", bin[tam-1-i]);
       }
 
       printf("\n");
