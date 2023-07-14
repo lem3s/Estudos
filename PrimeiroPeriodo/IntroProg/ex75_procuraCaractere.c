@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 int procura(char c, char str[]);
 
@@ -16,7 +17,7 @@ int main(){
 
     index = procura(str[0], str);
 
-    if(index > 0){
+    if(index >= 0){
       printf("Caractere %c encontrado no indice %d da string.\n", str[0], index);
     }else{
       printf("Caractere %c nao encontrado.\n", str[0]);
@@ -30,7 +31,7 @@ int procura(char c, char str[]){
   int res=-1, i=0;
   
   for(i=2; i<strlen(str); i++){
-    if(str[i] == c){
+    if(str[i] == toupper(c) || str[i] == tolower(c)){
       res = i-2;
       break;
     }
