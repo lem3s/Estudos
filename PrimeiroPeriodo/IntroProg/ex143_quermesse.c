@@ -17,7 +17,7 @@ int main(){
       scanf("%d", &arr[i]);
     }
 
-    printf("Teste %d\n%d\n", j, achaSorteado(arr, n));
+    printf("Teste %d\n%d\n\n", j, achaSorteado(arr, n));
 
     j++;
   }
@@ -29,10 +29,10 @@ int main(){
 int achaSorteado(int arr[], int n){
   int i=0;
 
-  for(i=1; i<=n; i++){
-    if(arr[i] == i){
-      break;
+  for(i=0; i<n; i++){
+    if(arr[i] == i+1){
+      return arr[i];
     }
   }
-  return i;
+  return -1;
 }
