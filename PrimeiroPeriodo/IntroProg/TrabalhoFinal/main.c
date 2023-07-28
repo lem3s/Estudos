@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MAX_HOSPEDE 100
+#define ANDARES 4
+#define QUARTOS_ANDAR 20  //Apenas numeros pares
 
 // Definição da estrutura hospede
 struct Hospede {
@@ -9,6 +12,19 @@ struct Hospede {
     char email[100];
     char telefone[15];
 };
+
+void bubbleSort(int arr[], int n){
+  int aux;
+  for(int i=0; i<n-1; i++){
+    for(int j=0; j<n-1-i; j++){
+      if(arr[j] > arr[j+1]){
+        aux = arr[j];
+        arr[j] = arr[j+1];
+        arr[j+1] = aux;
+      }
+    }
+  }
+}
 
 // Função para cadastrar um novo hospede na agenda estática
 int cadastrarHospede(struct Hospede hospede[], int numHospedes) {
@@ -52,6 +68,68 @@ void exibirHospedes(struct Hospede hospedes[], int numHospedes) {
     }
 }
 
+void exibirStatus(){
+  int numQuarto=1;
+  /*
+  printf("┌");
+  printf("┐");
+  printf("└");
+  printf("┘");
+  printf("─");
+  printf("│");
+  */
+
+  system("clear");
+
+  for(int i=0; i<ANDARES; i++){
+    printf("%d° andar: \n", i+1);
+
+    for(int h=0; h<2; h++){
+      if(h==0){
+        numQuarto = 1;
+      }
+      for(int j=0; j<QUARTOS_ANDAR/2; j++){
+        printf("┌");
+        printf("─");
+        printf("─");
+        printf("─");
+        printf("┐"); 
+      }
+      printf("\n");
+
+      for(int j=0; j<QUARTOS_ANDAR/2; j++){
+        printf("│");
+        if(h==0){
+          printf("%d", (i+1)*100+numQuarto);
+          numQuarto+=2;
+        }
+        else if (h==1){
+          printf("%d", (i+1)*100+numQuarto);
+          numQuarto+=2;
+        }
+
+
+        printf("│");
+      }
+      printf("\n");
+
+      for(int j=0; j<QUARTOS_ANDAR/2; j++){
+        printf("└");
+        printf("─");
+        printf("─");
+        printf("─");
+        printf("┘");
+      }
+      printf("\n");
+      numQuarto = 2;
+    }
+  }
+
+  char espera;
+  getchar();
+  scanf("%c", &espera);
+}
+
 int main() {
     struct Hospede agenda[MAX_HOSPEDE];
     int numHospedes = 0;
@@ -61,6 +139,7 @@ int main() {
         printf("MENU:\n");
         printf("1 - Cadastrar novo hospede\n");
         printf("2 - Exibir hospedes cadastrados\n");
+        printf("3 - Exibir status quartos\n");
         printf("0 - Sair\n");
         printf("Escolha uma opção: ");
         scanf(" %c", &opcao);
@@ -71,6 +150,9 @@ int main() {
                 break;
             case '2':
                 exibirHospedes(agenda, numHospedes);
+                break;
+            case '3':
+                exibirStatus();
                 break;
             case '0':
                 printf("Saindo...\n");
