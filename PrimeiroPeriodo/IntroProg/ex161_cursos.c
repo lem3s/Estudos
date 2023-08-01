@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 struct Cursos {
   int cod;
@@ -25,17 +26,18 @@ int main(){
     scanf("%f", &cursos[i].val);
     getchar();
     fgets(cursos[i].nome, sizeof(cursos[i].nome), stdin);
+    cursos[i].nome[strlen(cursos[i].nome)-1] = ' ';
   }
 
-  /*
   scanf("%d", &nAlunos);
   struct Aluno alunos[nAlunos];
 
   for(i=0; i<nAlunos; i++){
+    getchar();
     fgets(alunos[i].nome, sizeof(alunos[i].nome), stdin);
+    alunos[i].nome[strlen(alunos[i].nome)-1] = ' ';
     scanf("%d", &alunos[i].cod);
     scanf("%d", &alunos[i].cred);
-    getchar();
   }
 
   for(i=0; i<nAlunos; i++){
@@ -48,9 +50,8 @@ int main(){
       }
     }
 
-    printf("Aluno(a): %s Curso: %s Num. Creditos: %d Valor Credito: %f Mensalidade: %lf", alunos[i].nome, cursos[indexCurso].nome, alunos[i].cred, cursos[indexCurso].val, alunos[i].cred*cursos[indexCurso].val);
+    printf("Aluno(a): %sCurso: %sNum. Creditos: %d Valor Credito: %.2f Mensalidade: %.2lf\n", alunos[i].nome, cursos[indexCurso].nome, alunos[i].cred, cursos[indexCurso].val, alunos[i].cred*cursos[indexCurso].val);
   }
-  */
 
   return 0;
 }

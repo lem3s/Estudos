@@ -19,16 +19,19 @@ int main(){
 }
 
 int grauAco(int cc, int dr, int rt){
-  int grau = 10;
+  int grau;
 
-  if(cc >= MAX_CC){
-    grau--;
+  if(cc < MAX_CC && dr > MIN_DR){
+    grau=9;
   }
-  if(dr <= MIN_DR){
-    grau--;
+  else if(cc < MAX_CC && dr < MIN_DR && rt < MIN_RT){
+    grau=8;
   }
-  if(rt <= MIN_RT){
-    grau--;
+  else if(cc > MAX_CC && dr < MIN_DR && rt < MIN_RT){
+    grau=7;
+  }
+  else{
+    grau=10;
   }
 
   return grau;
