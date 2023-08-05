@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define MAX_HOSPEDE 100
 #define ANDARES 4
@@ -11,19 +12,49 @@ struct Hospede {
     char nome[50];
     char email[100];
     char telefone[15];
+    char quarto[8];
+    char entrada[10];
+    char saida[10];
 };
 
-void bubbleSort(int arr[], int n){
-  int aux;
-  for(int i=0; i<n-1; i++){
-    for(int j=0; j<n-1-i; j++){
-      if(arr[j] > arr[j+1]){
-        aux = arr[j];
-        arr[j] = arr[j+1];
-        arr[j+1] = aux;
-      }
-    }
-  }
+//Funções para retornar os dados tempo
+int getDia(){
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
+
+  return tm.tm_mday;
+}
+
+int getMes(){
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
+
+  return tm.tm_mon+1;
+}
+
+int getAno(){
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
+
+  return tm.tm_year+1900;
+}
+
+int getHoras(){
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
+
+  return tm.tm_hour;
+}
+
+int converteQuarto(struct Hospede hospedes[], int i){
+  char auxStr1[4];
+
+  auxStr1[0] = hospedes[i].quarto[0];
+  auxStr1[1] = hospedes[i].quarto[1];
+  auxStr1[2] = hospedes[i].quarto[2];
+  auxStr1[3] = '\0';
+
+  return atoi(auxStr1);
 }
 
 // Função para cadastrar um novo hospede na agenda estática
@@ -43,6 +74,15 @@ int cadastrarHospede(struct Hospede hospede[], int numHospedes) {
 
     printf("Digite o telefone do hospede: ");
     scanf(" %[^\n]", novoHospede.telefone);
+
+    printf("Digite o quarto do hospede: ");
+    scanf(" %[^\n]", novoHospede.quarto);
+
+    printf("Digite a data de check-in (ddmmaa): ");
+    scanf(" %[^\n]", novoHospede.entrada);
+
+    printf("Digite a data de check-out (ddmmaa): ");
+    scanf(" %[^\n]", novoHospede.saida);
 
     hospede[numHospedes] = novoHospede;
 
@@ -64,12 +104,41 @@ void exibirHospedes(struct Hospede hospedes[], int numHospedes) {
         printf("Nome: %s\n", hospedes[i].nome);
         printf("Email: %s\n", hospedes[i].email);
         printf("Telefone: %s\n", hospedes[i].telefone);
+        printf("Quarto: %s\n", hospedes[i].quarto);
+        printf("Check-in: %c%c/%c%c/20%c%c\n", hospedes[i].entrada[0], hospedes[i].entrada[1], hospedes[i].entrada[2], hospedes[i].entrada[3], hospedes[i].entrada[4], hospedes[i].entrada[5]);
+        printf("Check-out: %c%c/%c%c/20%c%c\n", hospedes[i].saida[0], hospedes[i].saida[1], hospedes[i].saida[2], hospedes[i].saida[3], hospedes[i].saida[4], hospedes[i].saida[5]);
         printf("\n");
     }
 }
 
-void exibirStatus(){
+//Ordena os Hospedes pelo número do quarto
+void sortHospedes(struct Hospede hospedes[], int numHospedes){
+  int n1, n2;
+
+  struct Hospede aux;
+  for(int i=0; i<numHospedes-1; i++){
+    for(int j=0; j<numHospedes-1-i; j++){
+      //Converte o número do quarto para int 
+      n1 = converteQuarto(hospedes, j);
+      n2 = converteQuarto(hospedes, j+1);
+
+      if(n1 > n2){
+        aux = hospedes[j];
+        hospedes[j] = hospedes[j+1];
+        hospedes[j+1] = aux;
+      }
+    }
+  }
+}
+
+//Função para exibir o status dos quartos
+void exibirStatus(struct Hospede hospedes[]){
   int numQuarto=1;
+  char dataIni[12];
+  char dataFin[12];
+  char auxStr1[4];
+  char auxStr2[4];
+  int n1, n2;
   /*
   printf("┌");
   printf("┐");
@@ -80,6 +149,15 @@ void exibirStatus(){
   */
 
   system("clear");
+
+  printf("Qual a data que deseja verificar a disponibilidade?\n");
+  printf("Data inicial (ddmmaaa): ");
+  getchar();
+  fgets(dataIni, sizeof(dataIni), stdin);
+
+  printf("Data final (ddmmaaa): ");
+  getchar();
+  fgets(dataFin, sizeof(dataFin), stdin);
 
   for(int i=0; i<ANDARES; i++){
     printf("%d° andar: \n", i+1);
@@ -99,24 +177,23 @@ void exibirStatus(){
 
       for(int j=0; j<QUARTOS_ANDAR/2; j++){
         printf("│");
-        if(h==0){
-          printf("%d", (i+1)*100+numQuarto);
-          numQuarto+=2;
-        }
-        else if (h==1){
-          printf("%d", (i+1)*100+numQuarto);
-          numQuarto+=2;
-        }
-
-
+        printf("%d", (i+1)*100+numQuarto);
+        numQuarto+=2;
         printf("│");
       }
       printf("\n");
 
+      if(h==1){
+        numQuarto = 2;
+      }
+
       for(int j=0; j<QUARTOS_ANDAR/2; j++){
+        int quarto;
+
         printf("└");
         printf("─");
-        printf("─");
+
+
         printf("─");
         printf("┘");
       }
@@ -129,6 +206,8 @@ void exibirStatus(){
   getchar();
   scanf("%c", &espera);
 }
+
+
 
 int main() {
     struct Hospede agenda[MAX_HOSPEDE];
@@ -149,6 +228,7 @@ int main() {
                 numHospedes = cadastrarHospede(agenda, numHospedes);
                 break;
             case '2':
+                sortHospedes(agenda, numHospedes);
                 exibirHospedes(agenda, numHospedes);
                 break;
             case '3':
