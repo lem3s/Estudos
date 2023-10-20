@@ -2,28 +2,18 @@
 #include <stdlib.h>
 
 int main(void){
-  char n1[3], n2[3];
-  char aux;
+  char n1[4], n2[4];
 
-  scanf("%s", n1);
-  scanf("%s", n2);
-
-  int i=0;
-
-  aux = n1[0];
-  n1[0] = n1[2];
-  n1[2] = aux;
-  printf("n1: %s\n", n1);
-
-  aux = n2[0];
-  n2[0] = n2[2];
-  n2[2] = aux;
-  printf("n2: %s\n", n2);
+  scanf("%c%c%c %c%c%c", &n1[2], &n1[1], &n1[0], &n2[2], &n2[1], &n2[0]);
+  n1[3] = '\0';
+  n2[3] = '\0';
 
   if (atoi(n1) > atoi(n2)){
     printf("%d\n", atoi(n1));
   }
-  else if (atoi(n2) > atoi(n1)){
+  else {
     printf("%d\n", atoi(n2));
   }
+
+  return 0;
 }
