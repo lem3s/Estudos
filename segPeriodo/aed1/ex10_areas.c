@@ -41,11 +41,11 @@ int main(void){
         break;
     }
 
-    for (i=0; i < n; i++){
-      printf("%.0lf\n", round(res[i]));
-    } 
   }
 
+  for (i=0; i < n; i++){
+    printf("%.0lf\n", round(res[i]));
+  } 
   return 0;
 }
 
@@ -58,8 +58,13 @@ double area_elipse(double a, double b){
 }
 
 double area_triangulo(double a, double b, double c){
-  int p = (a + b + c) / 2;
-  return sqrt(p * (p - a) * (p - b) * (p - c));
+  if (a == b && b == c){
+    return (pow(a, 2) * sqrt(3)) / 4;
+  }
+  else {
+    int p = (a + b + c) / 2;
+    return sqrt(p * (p - a) * (p - b) * (p - c));
+  }
 }
 
 double area_trapezio(double bb, double sb, double h){
