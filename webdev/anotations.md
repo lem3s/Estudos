@@ -1,0 +1,102 @@
+<h1 align = "center">General web development annotations</h1>
+
+### Html 🏗️
+
+Stands for **H**yper **T**ext **M**arkup **L**anguage
+
+HTML is used to store and describe the page content
+
+#### Usually an HTML element has 3 elements
+
+```
+<p> Something </p>
+ |      |       |
+ |      |     Closing Tag
+ |   Content
+Opening Tag
+```
+Although some tags don't have any content or closing tag, like `<br>` or `<img>`
+
+#### Basic File Structure
+
+>Tell the browser that this website is written in HTML5
+```
+<!DOCTYPE html>
+```
+<br>
+
+>Add the root HTML element
+```
+<!DOCTYPE html>
+<html>
+
+</html>
+```
+<br>
+
+>Add the `<head>` and `<body>` elements
+>>`<head>` is where the page title and metadata will be
+
+>>`<body>` is where the visible page content will be
+```
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+
+    <body>
+
+    </body>
+</html>
+```
+
+#### Basic Tags
+
+* Headings
+
+Headings can go to `<h1>` until `<h6>`
+```
+<h1> Heading 1 </h1>
+<h2> Heading 2 </h2>
+<h3> Heading 3 </h3>
+...
+<h6> Heading 6 </h6>
+```
+
+* Paragraphs
+
+Just to store regular text
+```
+<p>This is some random text</p>
+```
+
+* Bold
+
+To create some bold text we use `<strong>`
+> The use of the `<b>` tag is not a good practice
+
+```
+<p>The following word is <strong>bold</strong></p>
+```
+
+* Italic
+
+To create some bold text we use `<em>`, which stands for emphasise
+> The use of the `<i>` tag is not a good practice
+
+```
+<p>The following word is <em>italic</em></p>
+```
+
+* Lists
+
+Lists can be either ordered lists `<ol>` or unordered lists `<ul>`
+The list elements need to be inside a `<li>` tag
+```
+<ul>
+    <li>Flour</li>
+    <li>Eggs</li>
+    <li>Chantily</li>
+</ul>
+```
