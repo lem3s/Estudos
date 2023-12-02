@@ -1,14 +1,14 @@
 #include <stdio.h>
 
-// Retorna o número primo correspondente à ordem x
-int numPrimo(int x);
+// Calcula os n primeiros números primos
+void numPrimos(long int arr[], int n); 
 
 // Ordena um array em ordem crescente utilizando Bubble Sort
 void bubbleCres(int arr[], int n);
 
 int main(void){
 
-  int n, i;
+  int n, i, j, k;
 
   scanf("%d", &n);
 
@@ -21,32 +21,37 @@ int main(void){
 
   // Calcula e armazena em um array os valores correspondentes
   // aos numeros primos da ordem dada pelo usuário
-  int primos[n];
+  int maior = -1;
   for (i = 0; i < n; i++){
-    primos[i] = numPrimo(arr[i]);
+    if (arr[i] > maior){
+      maior = arr[i];
+    }
   }
 
+  long primos[maior];
+  numPrimos(primos, maior);
+
   // Ordena o array de numeros primos
-  bubbleCres(primos, n);
+  bubbleCres(arr, n);
 
   // Imprime e calcula a soma dos números primos desejados
   int soma = 0;
   for (i = 0; i < n; i++){
-    printf("%d ", primos[i]);
-    soma += primos[i];
+    printf("%ld ", primos[arr[i] - 1]);
+    soma += primos[arr[i] - 1];
   }
-  printf("\n%d\n", soma);
+  printf("\n%d", soma);
 
   return 0;
 }
 
 // Retorna o número primo correspondente à ordem x
-int numPrimo(int x){
-  int res = 2, flag = 0;
-  int i, j;
+void numPrimos(long int arr[], int n){
+  long int res = 2;
+  int i, j, flag = 0;
 
   // Para cada ordem de 0 a x - 1
-  for (i = 0; i < x; i++){
+  for (i = 0; i < n; i++){
 
     while (1){
       flag = 0;
@@ -63,14 +68,13 @@ int numPrimo(int x){
 
       if (flag == 0){
         res ++;
+        arr[i] = res - 1;
         break;
       }
 
       res++;
     }
   }
-
-  return res - 1;
 }
 
 void bubbleCres(int arr[], int n){
