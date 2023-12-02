@@ -6,7 +6,7 @@ int main(void){
 
   scanf("%d", &t);
 
-  int mat[t][10000];
+  int mat[t][1000];
   int ns[t];
 
   // Armazenar os valores
@@ -39,7 +39,7 @@ int main(void){
       }
     }
 
-    // Imprime o resultado dividindo por 2, já que as 
+    // Imprime o resultado dividindo por 2, já que as
     // combinações são contadas duplicadas
     printf("%d\n", pares / 2);
 

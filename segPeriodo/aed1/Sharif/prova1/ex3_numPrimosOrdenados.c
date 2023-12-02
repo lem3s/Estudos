@@ -1,10 +1,10 @@
 #include <stdio.h>
 
 // Retorna o número primo correspondente à ordem x
-long int numPrimo(int x);
+int numPrimo(int x);
 
 // Ordena um array em ordem crescente utilizando Bubble Sort
-void bubbleCres(long int arr[], int n);
+void bubbleCres(int arr[], int n);
 
 int main(void){
 
@@ -21,7 +21,7 @@ int main(void){
 
   // Calcula e armazena em um array os valores correspondentes
   // aos numeros primos da ordem dada pelo usuário
-  long int primos[n];
+  int primos[n];
   for (i = 0; i < n; i++){
     primos[i] = numPrimo(arr[i]);
   }
@@ -32,7 +32,7 @@ int main(void){
   // Imprime e calcula a soma dos números primos desejados
   int soma = 0;
   for (i = 0; i < n; i++){
-    printf("%ld ", primos[i]);
+    printf("%d ", primos[i]);
     soma += primos[i];
   }
   printf("\n%d\n", soma);
@@ -41,7 +41,7 @@ int main(void){
 }
 
 // Retorna o número primo correspondente à ordem x
-long int numPrimo(int x){
+int numPrimo(int x){
   int res = 2, flag = 0;
   int i, j;
 
@@ -52,7 +52,7 @@ long int numPrimo(int x){
       flag = 0;
 
       // Verifica se o número é divisível por algum número entre 2 e ele mesmo
-      for (j = 2; j < res; j++){
+      for (j = 2; j <= res / 2; j++){
         if (res % j == 0){
           // O número é divisível por algum número além de 1 e ele mesmo
           // Então o número não é primo
@@ -73,7 +73,7 @@ long int numPrimo(int x){
   return res - 1;
 }
 
-void bubbleCres(long int arr[], int n){
+void bubbleCres(int arr[], int n){
   int i, j;
   int aux;
 
