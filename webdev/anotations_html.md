@@ -154,3 +154,18 @@ Anchors are links that point to the website itself or to other websites
 
 <a href="#"> This link goes nowhere </a>
 ```
+
+- Page Structuring
+
+`<header>` is used to tell the browser that that's the introductory content
+or/and a set of navigational links
+
+`<nav>` is used to define a set of navigation links
+
+`<article>` is used to define an idependent item of content
+
+`<footer>` contains information about the author of the section, copyright data or links to related documents
+
+`<div>` a division without any meaning
+
+`<aside>` a secondary element
