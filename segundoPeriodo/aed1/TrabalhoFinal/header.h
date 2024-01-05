@@ -14,23 +14,23 @@ typedef struct{
     long double saldo;
 }cliente_t;
 
-// Menu principal
-void menu();
 
 // Adiciona novo usuário
-void criarConta();
+void criarConta(cliente_t clientes[]);
 
 // Verifica se a senha criada é forte
 int verificarSenha();
 
+void criptografiaSenha();
+
 // Exclui um usuário
-void excluirConta();
+void excluirConta(cliente_t clientes[]);
 
 // Verifica credenciais de acesso do usuário
-void login();
+void login(cliente_t clientes[]);
 
 // Mostra para o usuário o a seu saldo
-void verificarSaldo();
+void verificarSaldo(cliente_t clientes[]);
 
 // Transfere dinheiro de um usuário para o outro
-void transferirDinheiro();
+void transferirDinheiro(cliente_t clientes[]);

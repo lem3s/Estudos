@@ -46,7 +46,7 @@ int main() {
     }
   }
 
-  printf("numero de users: %u\n", numero_de_users);
+  printf("### Arquivo lido com sucesso - numero de users: %u\n", numero_de_users);
   fseek(arquivo, 0, SEEK_SET);
 
   // Aloca numero_de_users + 1 de memória para suportar os users existentes mais
@@ -60,19 +60,38 @@ int main() {
   }
   fclose(arquivo);
 
-  int x;
-  printf("Qual numero deseja ver: ");
-  scanf("%d", &x);
+  printf("============================\n");
+  printf("===== BANCO DO CERRADO =====\n");
+  printf("============================\n\n");
 
-  printf("Nome[%d]: %s\n", x, clientes[x - 1].nome);
+  int exit = 1;
+  while (exit) {
 
-  clientes[0].saldo = 200.00;
+    int opt;
+    printf("O QUE DESEJA FAZER?\n");
+    printf("1 - CRIAR UMA CONTA\n");
+    printf("2 - ACESSAR UMA CONTA EXISTENTE\n");
+    printf("3 - SAIR\n");
+    printf("OPÇÃO: ");
+    scanf("%d", &opt);
 
-  /*
+    switch (opt) {
+      case (1):
+        criarConta(clientes);
+        break;
 
-    Código principal
+      case (2):
+        login(clientes);
+        break;
 
-  */
+      case (3):
+        exit = 0;
+        break;
+
+      default:
+        printf("ERRO: Operação inválida\n");
+    }
+  }
 
   // TODO: Adicionar verificação de criação de conta para salvar a conta criada
   arquivo = fopen("dados.csv", "w");
@@ -83,4 +102,12 @@ int main() {
   fclose(arquivo);
 
   return 0;
+}
+
+void criarConta(cliente_t clientes[]){
+
+}
+
+void login(cliente_t clientes[]){
+
 }
