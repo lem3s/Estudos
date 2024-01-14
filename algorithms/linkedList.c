@@ -6,63 +6,152 @@ typedef struct node{
   struct node *next;
 }node_t;
 
-void inicia_lista(node_t *head) {
-  head =(node_t*) malloc(sizeof(node_t));
+int adiciona_inicio(node_t **head, int value) {
+  if (*head == NULL) {
+    (*head) = malloc(sizeof(node_t));
+    (*head)->value = value;
+    (*head)->next = NULL;
 
-  head->value = 0;
-  head->next = NULL;
-}
-
-void adiciona_nodes(int x_nodes, node_t *head) {
-  node_t *current = head;
-  if (head == NULL) {
-    printf("HEAD == NULL\n");
-    return;
+    return 0;
   }
 
+  node_t *current = *head;
+  current = malloc(sizeof(node_t));
+  current->value = value;
+  current->next = *head;
+
+  *head = current;
+
+  return 0;
+}
+
+int adiciona_final(node_t **head, int value) {
+  if (*head == NULL) {
+    (*head) = malloc(sizeof(node_t));
+    (*head)->value = value;
+    (*head)->next = NULL;
+    return 0;
+  }
+
+  node_t *current = *head;
   while (current->next != NULL) {
     current = current->next;
   }
 
-  for (int i = 0; i < x_nodes; i++) {
-    current->next = malloc(sizeof(node_t));
-    current = current->next;
-    current->value = i;
-  }
-
+  current->next = malloc(sizeof(node_t));
+  current = current->next;
+  current->value = value;
   current->next = NULL;
+
+  return 0;
 }
 
-void imprime_lista(node_t *head) {
-  node_t *current;
+int remover_inicio(node_t **head) {
+  if (*head == NULL) {
+    return -1;
+  }
 
-  int i = 0;
-  while (current != NULL){
-    printf("======================\n");
-    printf("ITEM: %d\n", i++); 
-    printf("VALUE: %d\n", current->value); 
-    printf("NEXT: %p\n", current->next);
-    printf("======================\n");
+  node_t *current = *head;
+  if ((*head)->next == NULL) {
+    free(current);
+    (*head) = NULL;
+  }
+  else if ((*head)->next != NULL) {
+    *head = (*head)->next;
+    free(current);
+  }
 
+  return 0;
+}
+
+int remover_final(node_t **head) {
+  if (*head == NULL) {
+    return -1;
+  }
+
+  node_t *current = *head;
+  node_t *anterior = *head;
+  while (current->next != NULL) {
+    anterior = current;
     current = current->next;
   }
+
+  anterior->next = NULL;
+  free(current);
+
+  return 0;
+}
+
+int imprime_lista(node_t **head) {
+  if (*head == NULL) {
+    printf("LISTA VAZIA\n");
+    return -1;
+  }
+
+  node_t *current = *head;
+  do {
+    printf("===========================\n");
+    printf("VALUE: %d\n", current->value);
+    printf("NEXT: %p\n", current->next);
+    printf("===========================\n");
+    if (current->next == NULL) {
+      break;
+    }
+    else {
+      current = current->next;
+    }
+  }while (1);
+
+  return 0;
 }
 
 int main() {
   node_t *head = NULL;
-  head = malloc(sizeof(node_t));
-  head->value = 123;
-  head->next = NULL;
 
-  printf("Lista Criada\n");
+  int flag = 1;
+  while (flag) {
+    int opcao;
+    printf("O que deseja fazer?\n");
+    printf("1) Adicionar node no inicio\n");
+    printf("2) Adicionar node no final\n");
+    printf("3) Remover node no inicio\n");
+    printf("4) Remover node no final\n");
+    printf("5) Imprimir todos os elementos da lista\n");
+    printf("6) Sair\n");
+    printf("Opção: ");
+    scanf("%d", &opcao);
 
-  int x_nodes;
-  printf("Quantos nodes deseja criar: ");
-  scanf("%d", &x_nodes);
-  adiciona_nodes(x_nodes, head);
-  printf("Nodes adicionados a lista\n");
+    int temp;
+    switch (opcao) {
+      case (1):
+        printf("Valor: ");
+        scanf("%d", &temp);
+        adiciona_inicio(&head, temp);
+        break;
+      case (2):
+        printf("Valor: ");
+        scanf("%d", &temp);
+        adiciona_final(&head, temp);
+        break;
+      case (3):
+        remover_inicio(&head);
+        break;
+      case (4):
+        remover_final(&head);
+        break;
+      case (5):
+        imprime_lista(&head);
+        break;
+      case (6):
+        flag = 0;
+        break;
+      default:
+        printf("Opção inválida!");
+        break;
+    }
+    printf("\n");
+  }
 
-  imprime_lista(head);
 
   return 0;
 }
