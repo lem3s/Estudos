@@ -35,6 +35,7 @@ void adiciona_nodes(int x_nodes, node_t *head) {
 
 void imprime_lista(node_t *head) {
   node_t *current;
+
   int i = 0;
   while (current != NULL){
     printf("======================\n");
