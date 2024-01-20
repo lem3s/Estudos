@@ -106,6 +106,29 @@ int main() {
 void criarConta(cliente_t clientes[]){
   while (true) {
     char temp_nome[100];
+    char temp_email[100];
+    char temp_senha[100];
+    long double temp_saldo;
+
+    while (true) {
+      printf("\nCriação de conta\n");
+      printf("Email: ");
+      scanf("%s", temp_email);
+
+      if (credenciaisExistem(clientes, temp_email) == false) {
+        break;
+      }
+      else if (credenciaisExistem(clientes, temp_email) == true) {
+        printf("Já exite uma conta com esse email, utilize outro email\n");
+      }
+    }
+    printf("Nome: ");
+    fgets(temp_nome, sizeof(temp_nome), stdin);
+
+    printf("Senha: ");
+    fgets(temp_nome, sizeof(temp_nome), stdin);
+
+
   }
 }
 
