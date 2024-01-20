@@ -55,7 +55,8 @@ int main() {
 
   if (numero_de_users > 0) {
     for (int i = 0; i < numero_de_users; i++) {
-      fscanf(arquivo, "%lu,%99[^,],%99[^,],%99[^,],%Lf", &clientes[i].id, clientes[i].nome, clientes[i].email, clientes[i].senha, &clientes[i].saldo);
+      fscanf(arquivo, "%lu,%99[^,],%99[^,],%99[^,],%Lf",
+                      &clientes[i].id, clientes[i].nome, clientes[i].email, clientes[i].senha, &clientes[i].saldo);
     }
   }
   fclose(arquivo);
@@ -64,8 +65,10 @@ int main() {
   printf("===== BANCO DO CERRADO =====\n");
   printf("============================\n\n");
 
-  int exit = 1;
-  while (exit) {
+  bool flag = true;
+  bool criouConta = false;
+  bool fezLogin = false;
+  while (flag) {
 
     int opt;
     printf("O QUE DESEJA FAZER?\n");
@@ -75,22 +78,18 @@ int main() {
     printf("OPÇÃO: ");
     scanf("%d", &opt);
 
-    switch (opt) {
+    switch (opt){
       case (1):
         criarConta(clientes);
         break;
-
       case (2):
         login(clientes);
         break;
-
       case (3):
-        exit = 0;
+        flag = false;
         break;
-
-      default:
-        printf("ERRO: Operação inválida\n");
     }
+
   }
 
   // TODO: Adicionar verificação de criação de conta para salvar a conta criada
@@ -105,7 +104,9 @@ int main() {
 }
 
 void criarConta(cliente_t clientes[]){
-
+  while (true) {
+    char temp_nome[100];
+  }
 }
 
 void login(cliente_t clientes[]){

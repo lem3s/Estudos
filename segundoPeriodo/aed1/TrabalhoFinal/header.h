@@ -34,3 +34,5 @@ void verificarSaldo(cliente_t clientes[]);
 
 // Transfere dinheiro de um usuário para o outro
 void transferirDinheiro(cliente_t clientes[]);
+
+bool credenciaisExistem(cliente_t clientes[], char email[]);
