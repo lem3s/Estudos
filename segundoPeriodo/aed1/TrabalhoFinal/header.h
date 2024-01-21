@@ -16,7 +16,7 @@ typedef struct{
 
 
 // Adiciona novo usuário
-void criarConta(cliente_t clientes[]);
+void criarConta(cliente_t clientes[], int numero_de_users);
 
 // Verifica se a senha criada é forte
 int verificarSenha();
@@ -35,4 +35,4 @@ void verificarSaldo(cliente_t clientes[]);
 // Transfere dinheiro de um usuário para o outro
 void transferirDinheiro(cliente_t clientes[]);
 
-bool credenciaisExistem(cliente_t clientes[], char email[]);
+bool credenciaisExistem(cliente_t clientes[], int numero_de_users, char email[]);

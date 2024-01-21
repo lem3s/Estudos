@@ -8,12 +8,12 @@ Sistema de Banco para o usuário final
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 #include "header.h"
 
 
 int main() {
-
   FILE *arquivo = fopen("dados.csv", "r");
 
   if (arquivo == NULL) {
@@ -33,7 +33,7 @@ int main() {
   fseek(arquivo, 0, SEEK_SET);
 
   // Tamanho 0 significa que ele está vazio
-  unsigned int numero_de_users = 0;
+  int numero_de_users = 0;
   if (tamanho_arquivo != 0){
     char ch;
 
@@ -80,7 +80,8 @@ int main() {
 
     switch (opt){
       case (1):
-        criarConta(clientes);
+        criarConta(clientes, numero_de_users);
+        numero_de_users++;
         break;
       case (2):
         login(clientes);
@@ -103,33 +104,37 @@ int main() {
   return 0;
 }
 
-void criarConta(cliente_t clientes[]){
+void criarConta(cliente_t clientes[], int numero_de_users){
   while (true) {
-    char temp_nome[100];
     char temp_email[100];
-    char temp_senha[100];
-    long double temp_saldo;
 
     while (true) {
       printf("\nCriação de conta\n");
       printf("Email: ");
       scanf("%s", temp_email);
 
-      if (credenciaisExistem(clientes, temp_email) == false) {
+      if (credenciaisExistem(clientes, numero_de_users, temp_email) == false) {
         break;
       }
-      else if (credenciaisExistem(clientes, temp_email) == true) {
+      else if (credenciaisExistem(clientes, numero_de_users, temp_email) == true) {
         printf("Já exite uma conta com esse email, utilize outro email\n");
       }
     }
     printf("Nome: ");
-    fgets(temp_nome, sizeof(temp_nome), stdin);
+    fgets(clientes[numero_de_users].nome, sizeof(clientes[numero_de_users].nome), stdin);
 
     printf("Senha: ");
-    fgets(temp_nome, sizeof(temp_nome), stdin);
-
-
+    fgets(clientes[numero_de_users].senha, sizeof(clientes[numero_de_users].senha), stdin);
   }
+}
+
+bool credenciaisExistem(cliente_t clientes[], int numero_de_users, char email[]){
+  for (int i = 0; i < numero_de_users; i++) {
+    if (strcmp(clientes[i].email, email) == 0) {
+      return false;
+    }
+  }
+  return true;
 }
 
 void login(cliente_t clientes[]){
