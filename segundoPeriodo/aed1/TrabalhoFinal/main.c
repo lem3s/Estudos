@@ -13,7 +13,7 @@ Sistema de Banco para o usuário final
 #include "header.h"
 
 
-int main() {
+int main(int argc, char *argv[]) {
   FILE *arquivo = fopen("dados.csv", "r");
 
   if (arquivo == NULL) {
@@ -65,10 +65,9 @@ int main() {
   printf("===== BANCO DO CERRADO =====\n");
   printf("============================\n\n");
 
-  bool flag = true;
-  bool criouConta = false;
-  bool fezLogin = false;
-  while (flag) {
+  bool flag1 = true;
+  int index_user = -1;
+  while (flag1) {
 
     int opt;
     printf("O QUE DESEJA FAZER?\n");
@@ -80,15 +79,34 @@ int main() {
 
     switch (opt){
       case (1):
-        criarConta(clientes, numero_de_users);
+        index_user = criarConta(clientes, numero_de_users);
         numero_de_users++;
         break;
       case (2):
-        login(clientes);
+        index_user = login(clientes, numero_de_users);
         break;
       case (3):
-        flag = false;
+        flag1 = false;
         break;
+    }
+
+    if (index_user > -1) {
+      bool flag2 = true;
+      while (flag2) {
+        printf("\n\nOlá %s\n", clientes[index_user].nome);
+        printf("O QUE DESEJA FAZER?\n");
+        printf("1 - DEPÓSITO\n");
+        printf("2 - TRANSFERÊNCIA\n");
+        printf("3 - SAIR\n");
+        printf("OPÇÃO: ");
+        scanf("%d", &opt);
+        switch (opt) {
+          case(3):
+            flag1 = false;
+            flag2 = false;
+            break;
+        }
+      }
     }
 
   }
@@ -104,39 +122,67 @@ int main() {
   return 0;
 }
 
-void criarConta(cliente_t clientes[], int numero_de_users){
+int criarConta(cliente_t clientes[], int numero_de_users){
+  char temp_email[100];
+
   while (true) {
-    char temp_email[100];
+    printf("\nCriação de conta\n");
+    printf("Email: ");
+    scanf("%s", temp_email);
 
-    while (true) {
-      printf("\nCriação de conta\n");
-      printf("Email: ");
-      scanf("%s", temp_email);
-
-      if (credenciaisExistem(clientes, numero_de_users, temp_email) == false) {
-        break;
-      }
-      else if (credenciaisExistem(clientes, numero_de_users, temp_email) == true) {
-        printf("Já exite uma conta com esse email, utilize outro email\n");
-      }
+    if (indexEmail(clientes, numero_de_users, temp_email) < 0) {
+      // strcpy(temp_email, clientes[numero_de_users].email);
+      strcpy(clientes[numero_de_users].email, temp_email);
+      break;
     }
-    printf("Nome: ");
-    fgets(clientes[numero_de_users].nome, sizeof(clientes[numero_de_users].nome), stdin);
-
-    printf("Senha: ");
-    fgets(clientes[numero_de_users].senha, sizeof(clientes[numero_de_users].senha), stdin);
+    else if (indexEmail(clientes, numero_de_users, temp_email) >= 0) {
+      printf("Já exite uma conta com esse email, utilize outro email\n");
+    }
   }
+
+  getchar();
+  printf("Nome: ");
+  fgets(clientes[numero_de_users].nome, sizeof(clientes[numero_de_users].nome), stdin);
+  clientes[numero_de_users].nome[strcspn(clientes[numero_de_users].nome, "\n")] = '\0';
+
+  printf("Senha: ");
+  fgets(clientes[numero_de_users].senha, sizeof(clientes[numero_de_users].senha), stdin);
+  clientes[numero_de_users].senha[strcspn(clientes[numero_de_users].senha, "\n")] = '\0';
+
+
+  clientes[numero_de_users].id = clientes[numero_de_users - 1].id + 1;
+  clientes[numero_de_users].saldo = 0.0;
+
+  return numero_de_users;
 }
 
-bool credenciaisExistem(cliente_t clientes[], int numero_de_users, char email[]){
+int indexEmail(cliente_t clientes[], int numero_de_users, char email[]){
   for (int i = 0; i < numero_de_users; i++) {
     if (strcmp(clientes[i].email, email) == 0) {
-      return false;
+      return i;
     }
   }
-  return true;
+  return -1;
 }
 
-void login(cliente_t clientes[]){
+int login(cliente_t clientes[], int numero_de_users){
+  char temp_email[100];
+  char temp_senha[100];
 
+  while (true) {
+    printf("\nLogin\n");
+    printf("Email: ");
+    scanf("%s", temp_email);
+    getchar();
+    printf("Senha: ");
+    fgets(temp_senha, sizeof(temp_senha), stdin);
+    temp_senha[strcspn(temp_senha, "\n")] = '\0';
+
+    if (indexEmail(clientes, numero_de_users, temp_email) >= 0 && strcmp(clientes[indexEmail(clientes, numero_de_users, temp_email)].senha, temp_senha) == 0) {
+      return indexEmail(clientes, numero_de_users, temp_email);
+    }
+    else if (indexEmail(clientes, numero_de_users, temp_email) >= 0 || strcmp(clientes[indexEmail(clientes, numero_de_users, temp_email)].senha, temp_senha) == 0) {
+      printf("Email ou  senha inválidos\n");
+    }
+  }
 }
