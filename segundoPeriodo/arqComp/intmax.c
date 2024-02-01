@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <limits.h>
+
 int main() {
   /* INT_MAX is the maximum representable integer. */
   int a = INT_MAX;

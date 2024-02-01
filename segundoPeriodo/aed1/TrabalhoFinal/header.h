@@ -15,25 +15,25 @@ typedef struct cliente{
     struct cliente *next;
 }cliente_t;
 
+void imprimeClientes(cliente_t *head);
 
 // Adiciona novo usuário
 int criarConta(cliente_t **head);
 
-int indexEmail(cliente_t **head, char email[]);
-
-int login(cliente_t clientes[], int numero_de_users);
-
-void criptografiaSenha();
-
-// Exclui um usuário
-void excluirConta(cliente_t clientes[]);
+int login(cliente_t **head);
 
 // Mostra para o usuário o a seu saldo
-void imprimirSaldo(cliente_t clientes[], int index_user);
+void imprimirSaldo(cliente_t **head, int id_user);
 
-void depositarDinheiro(cliente_t clientes[], int index_user);
+void depositarDinheiro(cliente_t **head, int id_user);
+
+void sacarDinheiro(cliente_t **head, int id_user);
 
 // Transfere dinheiro de um usuário para o outro
-void transferirDinheiro(cliente_t clientes[], int index_remetente, int numero_de_users);
+void transferirDinheiro(cliente_t **head, int id_user);
 
-void imprimeClientes(cliente_t *head);
+// Exclui um usuário
+int excluirConta(cliente_t **head, int id_user);
+
+int indexSenha(cliente_t **head, char senha[]);
+int indexEmail(cliente_t **head, char email[]);

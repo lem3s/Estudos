@@ -6,6 +6,7 @@ Nomes: João Victor Lemes, Yasmin Moura
 Sistema de Banco para o usuário final
 */
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -71,20 +72,19 @@ int main(int argc, char *argv[]) {
       current->next = NULL;
     }
   }
-  imprimeClientes(head);
 
   fclose(arquivo);
 
-  printf("============================\n");
-  printf("===== BANCO DO CERRADO =====\n");
-  printf("============================\n\n");
-
   bool flag1 = true;
-  bool fez_login = false;
+  printf("\e[1;1H\e[2J");
   while (flag1) {
 
     int opt;
-    int id_user;
+    int id_user = -1;
+
+    printf("============================\n");
+    printf("===== BANCO DO CERRADO =====\n");
+    printf("============================\n\n");
     printf("O QUE DESEJA FAZER?\n");
     printf("1 - CRIAR UMA CONTA\n");
     printf("2 - ACESSAR UMA CONTA EXISTENTE\n");
@@ -95,12 +95,9 @@ int main(int argc, char *argv[]) {
     switch (opt){
       case (1):
         id_user = criarConta(&head);
-        imprimeClientes(head);
-        fez_login = true;
         break;
-  //     case (2):
-  //       index_user = login(clientes, numero_de_users);
-        fez_login = true;
+      case (2):
+        id_user = login(&head);
         break;
       case (3):
         flag1 = false;
@@ -109,28 +106,47 @@ int main(int argc, char *argv[]) {
         printf("Opção inválida\n");
     }
 
-    if (fez_login == true) {
+    if (id_user >= 0) {
       bool flag2 = true;
+      printf("\e[1;1H\e[2J");
       while (flag2) {
-        printf("\n\nOlá User id: %d\n", id_user);
+
+        cliente_t *ponteiro_nome = head;
+        while (ponteiro_nome->id != id_user) {
+          ponteiro_nome = ponteiro_nome->next;
+        }
+
+        printf("\nOlá %s\n", ponteiro_nome->nome);
         printf("O QUE DESEJA FAZER?\n");
         printf("1 - EXIBIR SALDO\n");
         printf("2 - DEPÓSITO\n");
-        printf("3 - TRANSFERÊNCIA\n");
-        printf("4 - SAIR\n");
+        printf("3 - SAQUE\n");
+        printf("4 - TRANSFERÊNCIA\n");
+        printf("5 - EXCLUIR CONTA\n");
+        printf("6 - SAIR\n");
         printf("OPÇÃO: ");
         scanf("%d", &opt);
         switch (opt) {
-  //         case(1):
-  //           imprimirSaldo(clientes, index_user);
-  //           break;
-  //         case(2):
-  //           depositarDinheiro(clientes, index_user);
-  //           break;
-  //         case(3):
-  //           transferirDinheiro(clientes, index_user, numero_de_users);
-  //           break;
+          case(1):
+            imprimirSaldo(&head, id_user);
+            break;
+          case(2):
+            depositarDinheiro(&head, id_user);
+            break;
+          case(3):
+            sacarDinheiro(&head, id_user);
+            break;
           case(4):
+            transferirDinheiro(&head, id_user);
+            break;
+          case(5):
+            if (excluirConta(&head, id_user) == 0){
+              printf("Conta excluída com sucesso\n");
+              flag1 = false;
+              flag2 = false;
+            }
+            break;
+          case(6):
             flag1 = false;
             flag2 = false;
             break;
@@ -191,11 +207,13 @@ int criarConta(cliente_t **head){
     printf("Email: ");
     scanf("%s", temp_email);
 
-    if (indexEmail(&(*head) ,temp_email) < 0) {
-      break;
+    if (indexEmail(&(*head), temp_email) >= 0) {
+      printf("\e[1;1H\e[2J");
+      printf("ERRO: Já exite uma conta com esse email, utilize outro email\n");
+      return -1;
     }
-    else if (indexEmail(&(*head), temp_email) >= 0) {
-      printf("Já exite uma conta com esse email, utilize outro email\n");
+    else if (indexEmail(&(*head), temp_email) < 0) {
+      break;
     }
   }
 
@@ -219,11 +237,159 @@ int criarConta(cliente_t **head){
   fgets(current->senha, sizeof(current->senha), stdin);
   current->senha[strcspn(current->senha, "\n")] = '\0';
 
-
   current->id = (anterior->id) + 1;
   current->saldo = 0.0;
 
   return current->id;
+}
+
+int login(cliente_t **head){
+  char temp_email[100];
+  char temp_senha[100];
+
+  printf("\nLogin\n");
+  printf("Email: ");
+  scanf("%s", temp_email);
+  getchar();
+  printf("Senha: ");
+  fgets(temp_senha, sizeof(temp_senha), stdin);
+  temp_senha[strcspn(temp_senha, "\n")] = '\0';
+
+  if (indexEmail(&(*head), temp_email) >= 0 && indexEmail(&(*head), temp_email) == indexSenha(&(*head), temp_senha)) {
+    cliente_t *current = *head;
+
+    for (int i = 0; i < indexEmail(&(*head), temp_email); i++) {
+      current = current->next;
+    }
+    return current->id;
+  }
+  else if(indexEmail(&(*head), temp_email) < 0 || indexEmail(&(*head), temp_email) != indexSenha(&(*head), temp_senha)) {
+    printf("\e[1;1H\e[2J");
+    printf("ERRO: Email ou  senha inválidos\n");
+    return -1;
+  }
+  return -1;
+}
+
+void imprimirSaldo(cliente_t **head, int id_user){
+
+  cliente_t *current = *head;
+  while (current->id != id_user) {
+    current = current->next;
+  }
+
+  printf("============================\n");
+  printf("Saldo: R$%.2Lf\n", current->saldo);
+  printf("============================\n");
+}
+
+void depositarDinheiro(cliente_t **head, int id_user){
+  printf("============================\n");
+  printf("Valor: R$");
+  long double temp;
+  scanf("%Lf", &temp);
+
+  cliente_t *current = *head;
+  while (current->id != id_user) {
+    current = current->next;
+  }
+
+  if (current->saldo + temp > LLONG_MAX || current->saldo + temp < LLONG_MIN) {
+    printf("DEPÓSITO INVÁLIDO\n");
+    return;
+  }
+  current->saldo += temp;
+  printf("============================\n");
+}
+
+void sacarDinheiro(cliente_t **head, int id_user){
+  printf("============================\n");
+  printf("Valor: R$");
+  long double temp;
+  scanf("%Lf", &temp);
+
+  cliente_t *current = *head;
+  while (current->id != id_user) {
+    current = current->next;
+  }
+
+  if (current->saldo - temp < LLONG_MIN) {
+    printf("DEPÓSITO INVÁLIDO\n");
+    return;
+  }
+  current->saldo -= temp;
+  printf("============================\n");
+}
+
+void transferirDinheiro(cliente_t **head, int id_user){
+  char temp_email[100];
+  long double temp;
+  printf("============================\n");
+  printf("Valor do depósito: R$");
+  scanf("%Lf", &temp);
+  printf("Email do destinatário: ");
+  getchar();
+  fgets(temp_email, sizeof(temp_email), stdin);
+  temp_email[strcspn(temp_email, "\n")] = '\0';
+
+  cliente_t *current_remetente = *head;
+  while (current_remetente->id != id_user) {
+    current_remetente = current_remetente->next;
+  }
+
+  if (indexEmail(&(*head), temp_email) < 0) {
+    printf("Usuário de destino inexistente\n");
+    return;
+  }
+  else if (temp > current_remetente->saldo) {
+    printf("Saldo insuficiente\n");
+    return;
+  }
+
+  cliente_t *current_destinatario = *head;
+  while (strcmp(current_destinatario->email, temp_email) != 0) {
+    current_destinatario = current_destinatario->next;
+  }
+
+  current_remetente->saldo -= temp;
+  current_destinatario->saldo += temp;
+
+  printf("Depósito de R$%.2Lf realizado com sucesso para %s\n", temp, current_destinatario->nome);
+  printf("============================\n");
+}
+
+int excluirConta(cliente_t **head, int id_user){
+  printf("============================\n");
+  bool flag = true;
+  while (flag) {
+    char opt;
+    printf("Tem certeza que deseja excluir sua conta [S/N]: ");
+    getchar();
+    scanf("%c", &opt);
+    opt = toupper(opt);
+    switch (opt) {
+      case('S'):
+        flag = false;
+        break;
+      case('N'):
+        return -1;
+      default:
+        printf("Opção inválida\n");
+        break;
+    }
+  }
+
+  cliente_t *current = *head;
+  cliente_t *anterior = *head;
+  while (current->id != id_user) {
+    anterior = current;
+    current = current->next;
+  }
+
+  anterior->next = current->next;
+  free(current);
+
+  return 0;
 }
 
 int indexEmail(cliente_t **head, char email[]){
@@ -242,64 +408,18 @@ int indexEmail(cliente_t **head, char email[]){
   return -1;
 }
 
-// int login(cliente_t clientes[], int numero_de_users){
-//   char temp_email[100];
-//   char temp_senha[100];
-//
-//   while (true) {
-//     printf("\nLogin\n");
-//     printf("Email: ");
-//     scanf("%s", temp_email);
-//     getchar();
-//     printf("Senha: ");
-//     fgets(temp_senha, sizeof(temp_senha), stdin);
-//     temp_senha[strcspn(temp_senha, "\n")] = '\0';
-//
-//     if (indexEmail(clientes, numero_de_users, temp_email) >= 0 && strcmp(clientes[indexEmail(clientes, numero_de_users, temp_email)].senha, temp_senha) == 0) {
-//       return indexEmail(clientes, numero_de_users, temp_email);
-//     }
-//     else if (indexEmail(clientes, numero_de_users, temp_email) < 0 || strcmp(clientes[indexEmail(clientes, numero_de_users, temp_email)].senha, temp_senha) != 0) {
-//       printf("Email ou  senha inválidos\n");
-//     }
-//   }
-// }
+int indexSenha(cliente_t **head, char senha[]){
+  int i = 0;
+  cliente_t *current = *head;
+  do {
+    if (strcmp(current->senha, senha) == 0) {
+      return i;
+    }
+    else {
+      i++;
+      current = current->next;
+    }
+  }while (current != NULL);
 
-void imprimirSaldo(cliente_t clientes[], int index_user){
-  printf("============================\n");
-  printf("Saldo: R$%.2Lf\n", clientes[index_user].saldo);
+  return -1;
 }
-
-void depositarDinheiro(cliente_t clientes[], int index_user){
-  printf("============================\n");
-  printf("Valor: ");
-  long double temp;
-  scanf("%Lf", &temp);
-  if (clientes[index_user].saldo + temp > LLONG_MAX || clientes[index_user].saldo + temp < LLONG_MIN) {
-    printf("DEPÓSITO INVÁLIDO\n");
-    return;
-  }
-  clientes[index_user].saldo += temp;
-}
-
-// void transferirDinheiro(cliente_t clientes[], int index_remetente, int numero_de_users){
-//   char temp_email[100];
-//   long double temp;
-//   printf("============================\n");
-//   printf("Valor do depósito: ");
-//   scanf("%Lf", &temp);
-//   printf("Email do destinatário: ");
-//   getchar();
-//   fgets(temp_email, sizeof(temp_email), stdin);
-//   temp_email[strcspn(temp_email, "\n")] = '\0';
-//
-//   if (indexEmail(clientes, numero_de_users, temp_email) < 0 || temp > clientes[index_remetente].saldo) {
-//     printf("Saldo insuficiente ou usuário de destino inexistente\n");
-//     return;
-//   }
-//   int index_destino = indexEmail(clientes, numero_de_users, temp_email);
-//
-//   clientes[index_remetente].saldo -= temp;
-//   clientes[index_destino].saldo += temp;
-//
-//   printf("Depósito de R$%.2Lf realizado com sucesso para %s\n", temp, clientes[index_destino].nome);
-// }
