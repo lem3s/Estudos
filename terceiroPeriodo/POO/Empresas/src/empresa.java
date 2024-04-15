@@ -26,6 +26,6 @@ public class empresa {
     }
 
     public void paraString() {
-        JOptionPane.showMessageDialog(null, String.format("Empresa: %s\nCNPJ: %s\nResponsavel: %s", this._nome, this._cnpj, this._responsavel));
+        JOptionPane.showMessageDialog(null, String.format("Empresa: %s\nCNPJ: %s\nResponsavel: %s\nProdutos: %s", this._nome, this._cnpj, this._responsavel.nome, this.listaProdutos.toString()));
     }
 }
