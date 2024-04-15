@@ -10,7 +10,8 @@ public class Main {
 
         String opcaoEmpresa;
         String opcaoProduto;
-        do {
+        opcaoEmpresa = JOptionPane.showInputDialog("Deseja cadastrar uma empresa? (s/N): ");
+        while (opcaoEmpresa.equals("s") || opcaoEmpresa.equals("S")) {
             String tempNome;
             String tempCNPJ;
             String tempResponsavel;
@@ -23,7 +24,8 @@ public class Main {
 
             empresa tempEmpresa = new empresa(tempNome, tempCNPJ, new responsavel(tempResponsavel, tempTelefone));
 
-            do {
+            opcaoProduto = JOptionPane.showInputDialog("Deseja cadastrar um produto? (s/N): ");
+            while (opcaoProduto.equals("s") || opcaoProduto.equals("S")) {
                 String tempNomeProduto;
                 String tempTamanho;
                 String tempTipo;
@@ -38,12 +40,12 @@ public class Main {
 
                 tempEmpresa.listaProdutos.add(new produto(tempNomeProduto, tempTamanho, tempTipo, tempCor, tempEspecificacao));
 
-                opcaoProduto = JOptionPane.showInputDialog("Deseja cadastrar outra empresa(s/N): ");
-            } while (opcaoProduto.equals("s") || opcaoProduto.equals("S"));
+                opcaoProduto = JOptionPane.showInputDialog("Deseja cadastrar outra produto? (s/N): ");
+            }
 
             listaEmpresas.add(tempEmpresa);
-            opcaoEmpresa = JOptionPane.showInputDialog("Deseja cadastrar outra empresa(s/N): ");
-        } while (opcaoEmpresa.equals("s") || opcaoEmpresa.equals("S"));
+            opcaoEmpresa = JOptionPane.showInputDialog("Deseja cadastrar outra empresa? (s/N): ");
+        }
 
         for (empresa empresaX : listaEmpresas) {
             empresaX.paraString();
