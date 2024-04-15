@@ -1,6 +1,5 @@
-<h1 style="text-align: center">Diário de Bordo 1</h1>
-<h2 style="text-align: center">Aluno: João Victor Lemes - 202302614</h2>
-<h2 style="text-align: center">Linguagem: Go</h2>
+<h1 align="center">Diário de Bordo 1</h1>
+<h2 align="center">Aluno: João Victor Lemes - 202302614<br>Linguagem: Go</h2>
 
 ## Introdução
 
@@ -26,7 +25,7 @@ dependendo do contexto como o seu custo computacional, sua velocidade e o quão 
 >A linguagem Go possui em geral uma boa legibilidade, redigibilidade e confiabilidade.
 Já que não é muito próxima da linguagem de máquina, possui um bom nível de abstração e 
 um bom tratamento de erros e excessões
-```
+```go
 package main
 
 import "fmt"
