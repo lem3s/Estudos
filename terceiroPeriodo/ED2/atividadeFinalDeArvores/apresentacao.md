@@ -57,8 +57,7 @@ Assim a complexidade de tempo esperada em uma estrutura Treap para qualquer oper
 
 - Qual o desempenho?
 
-Executando o [código disponível da implementação da treap](http://github.com/lem3s/Estudos/terceiroPeriodo/ED2/atividadeFinalDeArvores/implementacaoTreap.go) temos:
-
+Executando o [código disponível da implementação da treap](https://github.com/lem3s/Estudos/blob/main/terceiroPeriodo/ED2/atividadeFinalDeArvores/implementacaoTreap.go) temos:
 ```
 # Inserção levou: 13.792µs
 # Inserção levou: 375ns
