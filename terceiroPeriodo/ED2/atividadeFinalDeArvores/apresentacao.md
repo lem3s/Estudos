@@ -10,14 +10,14 @@ por nós, em que cada um possui no máximo dois filhos e os valores a esquerda
 são sempre menores que o nó pai e os valores a direita são sempre maiores que
 o nó pai.
 
-<img src="./exemploArvoreBinaria.png" alt="Um exemplo de árvore binária de busca" width="400">
+<img src="./imagens/exemploArvoreBinaria.png" alt="Um exemplo de árvore binária de busca" width="400">
 
 ### Heap
 
 É uma também uma estrutura em árvore similar a BST, porém o nó pai é sempre
 maior que os seus filhos.
 
-<img src="./exemploHeap.png" alt="Um exemplo de uma estrutura heap" width="400">
+<img src="./imagens/exemploHeap.png" alt="Um exemplo de uma estrutura heap" width="400">
 
 ## Treaps
 
@@ -45,7 +45,7 @@ em uma BST comum tomando como referência a chave e, após inserida, se for nece
 perfomar rotações para que o valor da prioridade atenda a propriedade da heap de que
 o valor do nó pai deve ser maior que o valor do nós filhos.
 
-<img src="./exemploTreap.png" alt="Um exemplo de uma estrutura treap" width="400">
+<img src="./imagens/exemploTreap.png" alt="Um exemplo de uma estrutura treap" width="400">
 
 - Qual o seu objetivo?
 
