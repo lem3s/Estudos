@@ -59,6 +59,13 @@ return total
 }
 ```
 
+> A linguagem também permite a passagem de parâmetros por referência
+```go
+func increment(x *int) {
+    *x = *x + 1
+}
+```
+
 ### Métodos
 
 Em Go métodos são funções que se assemelham a aos métodos existentes em liguagens
@@ -120,6 +127,11 @@ A linguagem go possui funções que auxiliam no tratamento de casos de erro, sã
 A instrução `defer` adia a execução de uma função até que a função que a contém termine.
 
 ```go
+func main() {
+    fmt.Println("Início da função main")
+    defer fmt.Println("Essa mensagem será exibida por último")
+    fmt.Println("Fim da função main")
+}
 ```
 
 - Panic
@@ -127,13 +139,9 @@ A instrução `defer` adia a execução de uma função até que a função que 
 `panic` é usado para abortar a execução do programa de maneira abrupta.
 
 ```go
+func main() {
+    fmt.Println("Início da função main")
+    panic("Algo deu errado!")
+    fmt.Println("Fim da função main") // Isso não será executado
+}
 ```
-
-- Recover
-
-`recover` é usado para recuperar a execução normal de um panic.
-
-```go
-```
-
-
