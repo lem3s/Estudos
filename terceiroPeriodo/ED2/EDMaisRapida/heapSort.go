@@ -1,3 +1,4 @@
+// Alunos: João Victor Lemes e Yasmin Moura
 package main
 
 import (
@@ -14,21 +15,17 @@ func heapify(arr []int, n int, i int) {
 	left := 2*i + 1
 	right := 2*i + 2
 
-	// Se o filho esquerdo é maior que o nó pai
 	if left < n && arr[left] > arr[largest] {
 		largest = left
 	}
 
-	// Se o filho direito é maior que o nó pai
 	if right < n && arr[right] > arr[largest] {
 		largest = right
 	}
 
-	// Se o maior valor não é o nó pai
 	if largest != i {
 		arr[i], arr[largest] = arr[largest], arr[i] // troca
 
-		// Recursivamente heapify a subárvore afetada
 		heapify(arr, n, largest)
 	}
 }
@@ -36,19 +33,19 @@ func heapify(arr []int, n int, i int) {
 // Função principal para realizar o heap sort
 func heapSort(arr []int) {
 	n := len(arr)
+	buildMaxHeap(arr, n)
 
-	// Construir o heap (rearranjar o array)
-	for i := n/2 - 1; i >= 0; i-- {
-		heapify(arr, n, i)
-	}
-
-	// Um por um extrair um elemento do heap
 	for i := n - 1; i > 0; i-- {
-		// Mover a raiz atual para o final
 		arr[i], arr[0] = arr[0], arr[i]
 
-		// Chamar max heapify no heap reduzido
 		heapify(arr, i, 0)
+	}
+}
+
+// Função para construir um heap máximo a partir de um array
+func buildMaxHeap(arr []int, n int) {
+	for i := n/2 - 1; i >= 0; i-- {
+		heapify(arr, n, i)
 	}
 }
 
@@ -67,13 +64,36 @@ func main() {
 	scanner := bufio.NewScanner(leArquivo)
 	scanner.Split(bufio.ScanLines)
 
-  numbers := []int{}
-  for scanner.Scan(){
-    aSerInserido, _ := strconv.Atoi(scanner.Text())
-    numbers = append(numbers, aSerInserido);
-  }
+	numbers := []int{}
+	for scanner.Scan() {
+		aSerInserido, err := strconv.Atoi(scanner.Text())
+		if err != nil {
+			fmt.Printf("Erro ao converter a linha para inteiro: %v\n", scanner.Text())
+			continue
+		}
 
-  heapSort(numbers)
+		numbers = append(numbers, aSerInserido)
+	}
+
+	buildMaxHeap(numbers, len(numbers))
+
+	heapSort(numbers)
+
+	arquivoDeSaida, err := os.Create("SortedNumbers.txt")
+	if err != nil {
+		fmt.Println("Erro ao criar o arquivo de saída:", err)
+		return
+	}
+	defer arquivoDeSaida.Close()
+
+	writer := bufio.NewWriter(arquivoDeSaida)
+	for _, num := range numbers {
+		fmt.Fprintln(writer, num)
+	}
+
+	if err := writer.Flush(); err != nil {
+		fmt.Println("Erro ao salvar os números ordenados:", err)
+	}
 
 	tempoDecorrido := time.Since(startTime)
 	fmt.Printf("Tempo decorrido: %s\n", tempoDecorrido)
