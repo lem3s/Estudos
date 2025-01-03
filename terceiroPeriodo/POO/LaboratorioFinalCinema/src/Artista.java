@@ -8,4 +8,13 @@ public class Artista {
         this.idade = idade;
         this.nacionalidade = nacionalidade;
     }
+
+    @Override
+    public String toString() {
+        return "Artista{" +
+                "nome='" + nome + '\'' +
+                ", idade=" + idade +
+                ", nacionalidade='" + nacionalidade + '\'' +
+                '}';
+    }
 }

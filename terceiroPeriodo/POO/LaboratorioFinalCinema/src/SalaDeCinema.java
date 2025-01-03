@@ -54,4 +54,19 @@ public class SalaDeCinema {
     public void setFilmesEmExibicao(List<Filme> filmesEmExibicao) {
         this.filmesEmExibicao = filmesEmExibicao;
     }
+
+    @Override
+    public String toString() {
+        String stringFilmes = "";
+        for (Filme filme : filmesEmExibicao) {
+            stringFilmes += filme + "\n";
+        }
+
+        return "SalaDeCinema{" +
+                "numero=" + numero +
+                ", nome='" + nome + '\'' +
+                ", localizacao='" + localizacao + '\'' +
+                ", filmesEmExibicao=" + stringFilmes +
+                '}';
+    }
 }

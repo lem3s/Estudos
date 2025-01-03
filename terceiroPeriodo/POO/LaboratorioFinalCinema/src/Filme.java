@@ -76,4 +76,21 @@ public class Filme {
     public void setArtistas(List<Artista> artistas) {
         this.artistas = artistas;
     }
+
+    @Override
+    public String toString() {
+        String stringArtistas = "";
+        for (Artista artista : artistas) {
+            stringArtistas = stringArtistas + artista.toString() + "\n";
+        }
+
+        return "Filme{" +
+                "nome='" + nome + '\'' +
+                ", ano=" + ano +
+                ", paisDeOrigem='" + paisDeOrigem + '\'' +
+                ", lingua='" + lingua + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", artistas=" + stringArtistas +
+                '}';
+    }
 }
