@@ -1,0 +1,9 @@
+from typing import Protocol
+
+from Domain.Entities.Student import Student
+
+
+class StudentRepositoryInterface(Protocol):
+    def add(self, student: Student) -> Student: ...
+    def list_all(self) -> list[Student]: ...
+    def get_by_id(self, student_id: int) -> Student | None: ...

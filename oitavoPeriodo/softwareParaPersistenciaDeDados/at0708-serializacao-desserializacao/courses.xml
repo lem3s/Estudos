@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<courses>
+    <course>
+        <id>1</id>
+        <name>Software para persistência de dados</name>
+        <professorName>Marcelo Akira</professorName>
+        <hourLoad>128</hourLoad>
+        <beginDate>2026-08-12T00:00:00-03:00</beginDate>
+        <endDate>2026-12-02T00:00:00-03:00</endDate>
+    </course>
+</courses>
