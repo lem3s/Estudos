@@ -1,0 +1,9 @@
+from typing import Protocol
+
+from Domain.Entities.Course import Course
+
+
+class CourseRepositoryInterface(Protocol):
+    def add(self, course: Course) -> Course: ...
+    def list_all(self) -> list[Course]: ...
+    def get_by_id(self, course_id: int) -> Course | None: ...

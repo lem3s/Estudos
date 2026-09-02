@@ -416,3 +416,8 @@ importData / importFile:
 Objetos importados de String JSON: 1
 Objetos importados do arquivo XML: 1
 ```
+
+### Screenshots dos arquivos criados
+
+![Arquivo Json criado](jsonFile.png)
+![Arquivo Xml criado](XmlFile.png)
