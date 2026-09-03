@@ -1,0 +1,42 @@
+package model;
+
+import java.sql.SQLException;
+
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+
+public class Database {
+
+    private String databasePath = null;
+    private JdbcConnectionSource connection = null;
+
+    public Database(String databasePath) {
+        this.databasePath = databasePath;
+    }
+
+    public JdbcConnectionSource getConnection() throws SQLException {
+        if (databasePath == null) {
+            throw new SQLException("database name is null");
+        }
+        if (connection == null) {
+            try {
+                connection = new JdbcConnectionSource("jdbc:sqlite:" + databasePath);
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+            System.out.println("Banco de dados aberto com sucesso: " + databasePath);
+        }
+        return connection;
+    }
+
+    public void close() {
+        if (connection != null) {
+            try {
+                connection.close();
+                this.connection = null;
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+}
