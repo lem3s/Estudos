@@ -438,23 +438,23 @@ Por fim, seguem evidências das execuções cruciais da aplicação com CRUD sim
 
 ### Create
 
-![](/PreCreate.png)
-![](/PosCreate.png)
+![](PreCreate.png)
+![](PosCreate.png)
 
 > Resalto novamente aqui o seletor dinâmico de diretor ao cadastrar filme, com base nos diretores persistidos no banco de dados.
-![](/PreCreateFilme.png)
-![](/PosCreateFilme.png)
+![](PreCreateFilme.png)
+![](PosCreateFilme.png)
 
 ### Read
 
-![](/Read.png)
+![](Read.png)
 
 ### Update
 
-![](/PreAtualizacao.png)
-![](/PosAtualizacao.png)
+![](PreAtualizacao.png)
+![](PosAtualizacao.png)
 
 ### Delete
 
-![](/PreDelete.png)
-![](/PosDelete.png)
+![](PreDelete.png)
+![](PosDelete.png)
