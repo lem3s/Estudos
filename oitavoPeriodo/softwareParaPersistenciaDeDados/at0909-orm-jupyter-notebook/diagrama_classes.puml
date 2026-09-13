@@ -1,0 +1,50 @@
+@startuml
+
+class Usuario {
+  -id: Long
+  -nome: String
+  -email: String
+  -senha: String
+}
+
+class Conta {
+  -id: Long
+  -nome: String
+  -tipo: String
+  -saldo: BigDecimal
+}
+
+class Categoria {
+  -id: Long
+  -nome: String
+  -tipo: String
+}
+
+class Transacao {
+  -id: Long
+  -descricao: String
+  -valor: BigDecimal
+  -data: LocalDate
+  -tipo: String
+}
+
+class Orcamento {
+  -id: Long
+  -valorLimite: BigDecimal
+  -mesReferencia: String
+}
+
+class TransacaoCategoria {
+  -id: Long
+  -valorRateado: BigDecimal
+}
+
+Usuario "1" -- "N" Conta : possui
+Usuario "1" -- "N" Orcamento : define
+Conta "1" -- "N" Transacao : registra
+Categoria "1" -- "1" Orcamento : possui
+
+Transacao "1" -- "N" TransacaoCategoria
+Categoria "1" -- "N" TransacaoCategoria
+
+@enduml

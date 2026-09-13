@@ -1,0 +1,61 @@
+@startuml
+
+entity Usuario {
+  * id : BIGINT <<PK>>
+  --
+  nome : VARCHAR
+  email : VARCHAR
+  senha : VARCHAR
+}
+
+entity Conta {
+  * id : BIGINT <<PK>>
+  --
+  nome : VARCHAR
+  tipo : VARCHAR
+  saldo : DECIMAL
+  usuario_id : BIGINT <<FK>>
+}
+
+entity Categoria {
+  * id : BIGINT <<PK>>
+  --
+  nome : VARCHAR
+  tipo : VARCHAR
+}
+
+entity Transacao {
+  * id : BIGINT <<PK>>
+  --
+  descricao : VARCHAR
+  valor : DECIMAL
+  data : DATE
+  tipo : VARCHAR
+  conta_id : BIGINT <<FK>>
+}
+
+entity Orcamento {
+  * id : BIGINT <<PK>>
+  --
+  valor_limite : DECIMAL
+  mes_referencia : VARCHAR
+  usuario_id : BIGINT <<FK>>
+  categoria_id : BIGINT <<FK, UNIQUE>>
+}
+
+entity TransacaoCategoria {
+  * id : BIGINT <<PK>>
+  --
+  valor_rateado : DECIMAL
+  transacao_id : BIGINT <<FK>>
+  categoria_id : BIGINT <<FK>>
+}
+
+Usuario ||--o{ Conta : possui
+Usuario ||--o{ Orcamento : define
+Conta ||--o{ Transacao : registra
+Categoria ||--|| Orcamento : possui
+Transacao ||--o{ TransacaoCategoria : rateia
+Categoria ||--o{ TransacaoCategoria : classifica
+
+@enduml
