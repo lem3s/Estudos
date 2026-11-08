@@ -1,0 +1,21 @@
+{
+  "name": "grpc-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo minima de gRPC entre dois servicos Node/TypeScript",
+  "scripts": {
+    "proto:gen": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./gen --ts_proto_opt=outputServices=grpc-js,esModuleInterop=true,env=node estoque.proto",
+    "server": "ts-node server.ts",
+    "client": "ts-node client.ts"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.15.0",
+    "@grpc/grpc-js": "^1.12.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "ts-node": "^10.9.2",
+    "ts-proto": "^2.12.4",
+    "typescript": "^5.6.3"
+  }
+}
